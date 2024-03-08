@@ -1,6 +1,8 @@
 package main
 
 import(
+	"log"
+	"os"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
 )
@@ -17,5 +19,12 @@ func main() {
 	app.Static("/", "./static")
 
 	app.Get("/", RenderIndex)
-	app.Listen(":8080")
+
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Fatal(app.Listen("0.0.0.0:"+port))
 }
